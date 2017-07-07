@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+    <head>
+      <title>{% block title %}Tournament{% endblock %}</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/base.css' %}" />
+    </head>
+    <body>
+      <header>
+        {% block header %}
+          <h1>Bienvenue sur Tournament !</h1>
+        {% endblock %}
+      </header>
+      <nav>
+        {% block nav %}
+          <ul>
+            <li>Accueil</li>
+            <li>Tournois</li>
+            <li>Joueurs</li>
+          </ul>
+        {% endblock %}
+      </nav>
+      <section>
+        {% block section %}
+          <p>Test</p>
+        {% endblock %}
+      </section>
+      <footer>
+        {% block footer %}
+          &copy; Tournament
+        {% endblock %}
+      </footer>
+    </body>
+</html>
