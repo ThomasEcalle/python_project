@@ -32,6 +32,7 @@
                 <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
                   {% if message.tags %}
                     {% if message.tags == 'info' %}INFO - {% endif %}
+                    {% if message.tags == 'debug' %}DEBUG - {% endif %}
                     {% if message.tags == 'success' %}SUCCES - {% endif %}
                     {% if message.tags == 'warning' %}AVERTISSEMENT - {% endif %}
                     {% if message.tags == 'error' %}ERREUR - {% endif %}

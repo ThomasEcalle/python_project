@@ -2,7 +2,9 @@
 {% block title %}Tournament - Inscription{% endblock %}
 {% block section %}
   <h2>Inscription</h2>
-  <form>
-    <button type="send">Envoyer</button>
+  <form action="{% url "subscription" %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Envoyer</button>
   </form>
 {% endblock %}

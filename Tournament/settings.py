@@ -25,6 +25,11 @@ SECRET_KEY = 'tb*nz9%h^ho3$d-4ma5dnm8z#b#l^giml9)yny^t!+)#s^3f%5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Current server environment (could be 'DEV', 'PROD', 'BETA')
+ENVIRONMENT = 'DEV'
+
+MESSAGE_LEVEL = 10
+
 ALLOWED_HOSTS = []
 
 

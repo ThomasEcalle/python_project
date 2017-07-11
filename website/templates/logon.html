@@ -1,14 +1,11 @@
 {% extends "base.html" %}
+{% block nav %}{% endblock %}
 {% block title %}Tournament - Connexion{% endblock %}
 {% block section %}
   <h2>Connexion</h2>
-  <form>
-    <label>Nom Du Groupe
-      <input type="text" name="group" />
-    </label>
-    <label>Mot de passe
-      <input type="password" name="password" />
-    </label>
-    <button type="send">Envoyer</button>
+  <form action="{% url "logon" %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Envoyer</button>
   </form>
 {% endblock %}

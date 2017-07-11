@@ -1,7 +1,9 @@
 ul{ list-style-type: none; }
 
-.info{ color: #0000FF; font-size: large; }
-.debug{ color: #000000; font-size: large; }
-.error{ color: #FF0000; font-size: large; }
-.warning{ color: #999911; font-size: large; }
-.success{ color: #00FF00; font-size: large; }
+.info{ color: #00529B; font-size: large; padding: 15px 10px 15px 10px; border: 1px solid; width: 400px; margin: 10px; background-color: #99D7FF; }
+.debug{ color: #656565; font-size: large; padding: 15px 10px 15px 10px; border: 1px solid; width: 400px; margin: 10px; background-color: #DCDCDC; }
+.error{ color: #D8000C; font-size: large; padding: 15px 10px 15px 10px; border: 1px solid; width: 400px; margin: 10px; background-color: #FF9F9F; }
+.warning{ color: #9F6000; font-size: large; padding: 15px 10px 15px 10px; border: 1px solid; width: 400px; margin: 10px; background-color: #FBF2B7; }
+.success{ color: #4F8A10; font-size: large; padding: 15px 10px 15px 10px; border: 1px solid; width: 400px; margin: 10px; background-color: #B0F2B6; }
+
+.errorlist{ color: #FF6347; font-size: large; }
