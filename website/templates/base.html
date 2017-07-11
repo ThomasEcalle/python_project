@@ -25,6 +25,22 @@
         {% endblock %}
       </nav>
       <section>
+        {% block messages %}
+          {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                  {% if message.tags %}
+                    {% if message.tags == 'info' %}INFO - {% endif %}
+                    {% if message.tags == 'success' %}SUCCES - {% endif %}
+                    {% if message.tags == 'warning' %}AVERTISSEMENT - {% endif %}
+                    {% if message.tags == 'error' %}ERREUR - {% endif %}
+                  {% endif %}
+                  {{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endblock %}
         {% block section %}
           <p>Test</p>
         {% endblock %}

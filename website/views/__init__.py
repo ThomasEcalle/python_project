@@ -3,4 +3,5 @@
 # '*' means that we import all routes from the file but it is possible to import only one route by putting its name instead.
 
 from .home import *
+from .logon import *
 from .subscription import *

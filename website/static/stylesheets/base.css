@@ -1,1 +1,7 @@
-h1{ color: red; }
+ul{ list-style-type: none; }
+
+.info{ color: #0000FF; font-size: large; }
+.debug{ color: #000000; font-size: large; }
+.error{ color: #FF0000; font-size: large; }
+.warning{ color: #999911; font-size: large; }
+.success{ color: #00FF00; font-size: large; }
