@@ -5,5 +5,6 @@ ul{ list-style-type: none; }
 .error{ color: #D8000C; font-size: large; padding: 15px 10px 15px 10px; border: 1px solid; width: 400px; margin: 10px; background-color: #FF9F9F; }
 .warning{ color: #9F6000; font-size: large; padding: 15px 10px 15px 10px; border: 1px solid; width: 400px; margin: 10px; background-color: #FBF2B7; }
 .success{ color: #4F8A10; font-size: large; padding: 15px 10px 15px 10px; border: 1px solid; width: 400px; margin: 10px; background-color: #B0F2B6; }
-
+.player{ margin: 20px; text-align: center; border: 1px solid black; border-radius: 5px;}
+.tournament{ margin: 20px; text-align: center; border: 1px solid black; border-radius: 5px;}
 .errorlist{ color: #FF6347; font-size: large; }

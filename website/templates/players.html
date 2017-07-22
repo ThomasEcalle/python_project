@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Tournament - Joueurs{% endblock %}
+{% block playersclass %} active {% endblock %}
+{% block section %}
+<h2>Joueurs</h2>
+	{% if request.session.isAdmin %}
+	<div>
+		<form action="{% url 'players' %}" method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit">Créer</button>
+		</form>
+	</div>
+	{% endif %} 
+	<div>
+	{% if not players %}
+	<div>Aucun joueur pour le moment.</div>
+	
+	{% else %}
+		<div class="row">
+			{% for player in players %}
+				<div class="bg-primary col-lg-1 player">{{ player }}</div>
+			{% endfor %}
+		</div>
+	{% endif %} 
+
+	</div>
+
+  
+  
+{% endblock %}

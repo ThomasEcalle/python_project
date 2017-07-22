@@ -9,30 +9,16 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/bootstrap.min.css' %}" />
       <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/base.css' %}" />
-	  
-	  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	  <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
       
     </head>
     <body>
       <header>
-       
-      </header>
-	  
-      <nav>
-        {% block nav %}
-			<ul class="nav nav-pills">
-			  <li role="presentation" class="{% block homeclass %}{% endblock %}"><a href="{% url 'home' %}">Accueil</a></li>
-			  <li role="presentation" class="{% block playersclass %}{% endblock %}"><a href="{% url 'players' %}">Joueurs</a></li>
-			  <li role="presentation" class="{% block tournamentsclass %}{% endblock %}"><a href="{% url 'all' %}">Les tournois</a></li>
-			  {% if request.session.isAdmin %}
-				<li role="presentation" class="{% block createtournamentsclass %}{% endblock %}"><a href="{% url 'create_tournament' %}">Creer un tournoi</a></li>
-			  {% endif %}
-			  
-			  <li role="presentation"><a href="{% url 'deconnect' %}">Deconnexion</a></li>
-			</ul>
+        {% block header %}
+          <h1>Bienvenue sur Tournament !</h1>
         {% endblock %}
+      </header>
+      <nav>
+        
       </nav>
       <section>
         {% block messages %}
@@ -57,10 +43,9 @@
         {% endblock %}
       </section>
       <footer>
-        <!--{% block footer %}
+        {% block footer %}
           &copy; Tournament
-        {% endblock %}-->
+        {% endblock %}
       </footer>
-	  
     </body>
 </html>

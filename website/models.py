@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class Group(models.Model):
@@ -10,3 +11,18 @@ class Group(models.Model):
 
     def __str__(self):
         return 'Group name : ' + self.name + ' | Group email : ' + self.email
+
+
+class Player(models.Model):
+    pseudo = models.CharField(max_length=64, verbose_name="Pseudo")
+
+    def __str__(self):
+        return self.pseudo
+
+
+class Tournament(models.Model):
+    name = models.CharField(max_length=64, verbose_name="Nom du tournoi")
+    isStarted = models.BooleanField(verbose_name="commence")
+
+    def __str__(self):
+        return self.name

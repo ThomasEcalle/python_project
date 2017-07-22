@@ -5,3 +5,7 @@
 from .home import *
 from .logon import *
 from .subscription import *
+from .players import *
+from .deconnect import *
+from .create_tournament import *
+from .all import *

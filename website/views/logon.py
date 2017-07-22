@@ -1,23 +1,21 @@
-from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.shortcuts import render
+
 from ..forms import LogonForm
 from ..models import Group
 
+
 # This file contains the logon page render.
 def logon(request):
-
     # Check if the server is in production or not.
     if settings.ENVIRONMENT != 'PROD':
-
         # Print an information message saying in wich environment the server is for now.
         messages.add_message(request, messages.INFO, 'Environnement is ' + settings.ENVIRONMENT + ' !')
 
     # Check if debug mode is on.
     if settings.DEBUG == True:
-
         # Print a warning message to inform that the debug mode is on.
         messages.add_message(request, messages.WARNING, 'Debug mode is ON !')
 
@@ -35,25 +33,29 @@ def logon(request):
                 results = Group.objects.get(name=form.cleaned_data['name'], aPassword=form.cleaned_data['password'])
 
                 # Group found, return a success message.
-                messages.add_message(request, messages.SUCCESS, 'Vous êtes maintenant connecté en tant qu\'administrateur !')
-
-                # Redirect user to home page.
+                messages.add_message(request, messages.SUCCESS,
+                                     'Vous êtes maintenant connecté en tant qu\'administrateur !')  # Redirect user to home page.
+                request.session["isConnected"] = "true"
+                request.session["isAdmin"] = "true"
+                request.session["groupname"] = results.name
                 return redirect('home', permanent=True)
 
             # No group found using these credentials.
-            except Group.DoesNotExist:
-
-                # Try to find a visitor group using these credentials.
+            except Group.DoesNotExist:  # Try to find a visitor group using these credentials.
                 try:
                     results = Group.objects.get(name=form.cleaned_data['name'], vPassword=form.cleaned_data['password'])
 
                     # Group found, return a success message.
-                    messages.add_message(request, messages.SUCCESS, 'Vous êtes maintenant connecté en tant que visiteur !')
+                    messages.add_message(request, messages.SUCCESS,
+                                         'Vous êtes maintenant connecté en tant que visiteur !')
 
+                    request.session["isConnected"] = "true"
+                    request.session["groupname"] = results.name
                     # Redirect user to home page.
                     return redirect('home')
 
                 # No group found using the visitor password.
+
                 except Group.DoesNotExist:
 
                     # Return an error message.

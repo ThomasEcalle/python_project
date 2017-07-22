@@ -1,12 +1,12 @@
 from django import forms
-from .models import Group
-from django.contrib import messages
+
+from .models import Group, Player, Tournament
+
 
 ###############################################################################################################################################
 
 # Form used for subscription.
 class SubscriptionForm(forms.ModelForm):
-
     # Set the field as password in the form to hide the text from the input.
     aPassword = forms.CharField(widget=forms.PasswordInput(), label='Mot De Passe Administrateur')
     vPassword = forms.CharField(widget=forms.PasswordInput(), label='Mot De Passe Visiteur')
@@ -26,6 +26,13 @@ class SubscriptionForm(forms.ModelForm):
         # Apply the default cleaning function before checking passwords.
         cleaned_data = super(SubscriptionForm, self).clean()
 
+        # Test unicity of the group's name
+        name = cleaned_data.get('name')
+        group = Group.objects.filter(name=name)
+
+        if group:
+            raise forms.ValidationError('Un groupe de ce nom existe deja')
+
         # Get administration password and its confirmation in variables.
         aPassword = cleaned_data.get('aPassword')
         aConfirm = cleaned_data.get('aConfirm')
@@ -42,12 +49,34 @@ class SubscriptionForm(forms.ModelForm):
         if vPassword != vConfirm:
             raise forms.ValidationError('Le mot de passe visiteur et sa confirmation sont différents !')
 
+        return cleaned_data
+
+
 ###############################################################################################################################################
+
 
 # Logon form.
 class LogonForm(forms.Form):
-
     name = forms.CharField(required=True, label='Nom Du Groupe')
     password = forms.CharField(required=True, widget=forms.PasswordInput(), label='Mot De Passe')
 
+
 ###############################################################################################################################################
+
+# Player form.
+class PlayerForm(forms.ModelForm):
+    pseudo = forms.CharField(required=True, label='Pseudo')
+
+    # Create the form using the 'player' model.
+    class Meta:
+        model = Player
+        fields = '__all__'
+		
+# Tournament form.
+class TournamentForm(forms.ModelForm):
+    name = forms.CharField(required=True, label='Nom du tournoi')
+
+    # Create the form using the 'tournament' model.
+    class Meta:
+        model = Tournament
+        fields = ('name',)

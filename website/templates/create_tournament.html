@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Tournament - Creation{% endblock %}
+{% block createtournamentsclass %} active {% endblock %}
+{% block section %}
+<h2>Creer un tournoi</h2>
+	{% if request.session.isAdmin  %}
+	<div>
+		<form action="{% url 'create_tournament' %}" method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit">Creer</button>
+		</form>
+	</div>
+	{% endif %}  
+{% endblock %}
