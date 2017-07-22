@@ -32,6 +32,7 @@ MESSAGE_LEVEL = 10
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = '/tournament/logon'
 
 # Application definition
 

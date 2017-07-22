@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
-# This file contains the home page render.
 
+@login_required
 def home(request):
-    if request.session.has_key('isConnected'):
-        messages.add_message(request, messages.DEBUG, 'Test message !')
-        return render(request, 'home.html', {})
-    else:
-        return redirect('logon', permanent=True)
+    messages.add_message(request, messages.DEBUG, 'Test message !')
+    return render(request, 'home.html', {})

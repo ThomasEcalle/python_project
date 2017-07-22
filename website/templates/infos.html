@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Tournament - {{tournament.name}}{% endblock %}
+
+{% block section %}
+
+<h1>Informations concernant le tournoi : {{tournament.name}}</h1>
+<a href="{% url 'launch_tournament' slug=tournament.name %}"><button type="button" class="btn btn-success">Lancer le tournoi !</button></a>
+<div>
+
+{% if tournament.isStarted %}
+
+	<i>already started</i>
+	
+{% else %}
+
+	<div class="row" >
+		<div class="col-lg-6 list_of_players_tournament">
+			<h2>Joueurs inscris</h2>
+			{% if players_in_tournament %}
+				<form action="{% url 'remove_player_from_tournament' slug=tournament.name  %}" method="post">
+				{% csrf_token %}
+				{% for player in players_in_tournament %}
+					
+					<div class="adding_player_in_tournament col-lg-12 row">
+						<div class="bg-primary player col-lg-6">{{ player }}</div>
+					
+						<div>
+							<input type="checkbox"  name="player_box" value="{{player.pseudo}}" />
+						</div>
+					</div>
+				{% endfor %}
+					<button type="submit" name="remove">Retirer</button>
+				</form>
+			{% else %}
+				<i>Aucun joueur inscrit</i>
+			{% endif %}
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		<div class="col-lg-6 list_of_players_tournament" >
+			<h2>Joueurs disponibles</h2>
+				{% if players_remaining %}
+					<form action="{% url 'add_player_in_tournament' slug=tournament.name  %}" method="post">
+					{% csrf_token %}
+					{% for player in players_remaining %}
+						<div class="adding_player_in_tournament col-lg-12 row">
+							<div class="bg-primary player col-lg-6">{{ player }}</div>
+						
+							<div>
+								<input type="checkbox"  name="player_box" value="{{player.pseudo}}" />
+							</div>
+						</div>
+						
+						
+					{% endfor %}
+					<button type="submit" name="add">Ajouter</button>
+					</form>
+				{% else %}
+				
+					<i>Plus de joueurs en stock !</i>
+				{% endif %}
+				
+			
+		</div>
+	</div>
+{% endif %}
+
+
+</div>
+{% endblock %}

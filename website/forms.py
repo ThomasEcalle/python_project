@@ -7,6 +7,7 @@ from .models import Group, Player, Tournament
 
 # Form used for subscription.
 class SubscriptionForm(forms.ModelForm):
+    """ Form in order to subscribe to the website """
     # Set the field as password in the form to hide the text from the input.
     aPassword = forms.CharField(widget=forms.PasswordInput(), label='Mot De Passe Administrateur')
     vPassword = forms.CharField(widget=forms.PasswordInput(), label='Mot De Passe Visiteur')
@@ -55,25 +56,27 @@ class SubscriptionForm(forms.ModelForm):
 ###############################################################################################################################################
 
 
-# Logon form.
 class LogonForm(forms.Form):
+    """ Logon form """
     name = forms.CharField(required=True, label='Nom Du Groupe')
     password = forms.CharField(required=True, widget=forms.PasswordInput(), label='Mot De Passe')
 
 
-###############################################################################################################################################
 
 # Player form.
 class PlayerForm(forms.ModelForm):
+    """ Form in order to create a player """
     pseudo = forms.CharField(required=True, label='Pseudo')
 
     # Create the form using the 'player' model.
     class Meta:
         model = Player
-        fields = '__all__'
-		
+        fields = ('pseudo',)
+
+
 # Tournament form.
 class TournamentForm(forms.ModelForm):
+    """ Form in order to create a Tournament """
     name = forms.CharField(required=True, label='Nom du tournoi')
 
     # Create the form using the 'tournament' model.

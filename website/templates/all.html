@@ -3,19 +3,23 @@
 {% block tournamentsclass %} active {% endblock %}
 {% block section %}
 <h2>Liste des tournois</h2>
-	<div>
-	{% if not tournaments %}
-	<div>Aucun tournoi pour le moment.</div>
-	
-	{% else %}
-		<div class="row">
-			{% for tournament in tournaments %}
-				<a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"><div class="bg-info col-lg-1 tournament">{{ tournament }}</div></a>
-				
-			{% endfor %}
-		</div>
-	{% endif %} 
-	
+	<div class="row">
+		<div class="col-lg-6">
+		{% if not tournaments %}
+		<div>Aucun tournoi pour le moment.</div>
+		
+		{% else %}
+			<div class="row">
+				{% for tournament in tournaments %}
+					<div class="bg-info col-lg-4 tournament"><a href="{% url 'infos' slug=tournament.name  %}">{{ tournament }}</a></div>
+				{% endfor %}
+			</div>
+		{% endif %} 
+		
 
+		</div>
+		<div class="col-lg-6">
+			
+		</div>
 	</div>
 {% endblock %}
