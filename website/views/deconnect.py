@@ -5,5 +5,5 @@ from django.contrib.auth import logout
 def deconnect(request):
 	print("yahoooooooooooo ")
 	logout(request)
-	return redirect('logon', permanent=True)
+	return redirect('logon')
 	

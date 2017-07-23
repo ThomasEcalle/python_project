@@ -22,13 +22,13 @@ def subscription(request):
             adminPassword = form.cleaned_data['aPassword']
             visitorPassword = form.cleaned_data['vPassword']
 
-            userAdmin = User.objects.create_user(username=name+"a", password=adminPassword)
-            userVisitor = User.objects.create_user(username=name+"v", password=visitorPassword)
+            userAdmin = User.objects.create_user(username=name + "a", password=adminPassword)
+            userVisitor = User.objects.create_user(username=name + "v", password=visitorPassword)
 
             userAdmin.save()
             userVisitor.save()
             # If the form is valid and can be submitted, return an information message to user.
             form.save()
-            return render(request, 'home.html', {})  # Form is submitted, send a view with an empty form.
+            return render(request, 'logon.html', locals())  # Form is submitted, send a view with an empty form.
 
     return render(request, 'subscription.html', locals())  # Show the subscription page.

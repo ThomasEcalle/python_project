@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^add_player_in_tournament/(?P<slug>.+)', views.add_player_in_tournament, name='add_player_in_tournament'),
     url(r'^remove_player_from_tournament/(?P<slug>.+)', views.remove_player_from_tournament, name='remove_player_from_tournament'),
     url(r'^launch_tournament/(?P<slug>.+)', views.launch_tournament, name='launch_tournament'),
+    url(r'^choose_winner/', views.choose_winner, name='choose_winner'),
 ]

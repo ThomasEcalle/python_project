@@ -76,6 +76,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Tournament.wsgi.application'
 
+#YEEEEEEEEEEEES !!!!  DELETE THE DUMMY CACHE THAT WAS SO FUCKING BORING ! (peace <3)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases

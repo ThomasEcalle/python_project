@@ -33,6 +33,26 @@ class Tournament(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        permissions = (
+            ("modify_tournament", "enable user to modify everything about a tournament"),
+        )
+
+
+class Node(models.Model):
+    """ Represent a Node of the binary tree's tournament """
+    rank = models.IntegerField()
+    parent = models.ForeignKey('Node', null=True)
+    player = models.ForeignKey('Player', null=True, related_name='player')
+    winner = models.ForeignKey('Player', null=True, related_name='winner')
+    tournament = models.ForeignKey('Tournament')
+
+    def __str__(self):
+        name = self.player.pseudo if self.player is not None else "0"
+        parent_id = self.parent.id if self.parent is not None else "none"
+        return "Node (" + self.tournament.name + ") id: " + str(self.id) + ",  rank : " + str(
+            self.rank) + ", player = " + name + ", parent : " + str(parent_id)
+
 
 class Participation(models.Model):
     """ Represent a link between Players and their different tournaments """

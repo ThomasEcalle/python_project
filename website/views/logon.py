@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import redirect
 from django.shortcuts import render
 
 from ..forms import LogonForm
-from ..models import Group
+from ..models import Group, Tournament
 
 
 # This file contains the logon page render.
@@ -31,18 +33,25 @@ def logon(request):
         if form.is_valid():
 
             user = authenticate(username=form.cleaned_data['name'] + "a", password=form.cleaned_data['password'])
-
+            if user:
+                needPermission = True
             if user is None:
                 user = authenticate(username=form.cleaned_data['name'] + "v", password=form.cleaned_data['password'])
+                needPermission = False
             if user is not None:
                 # Try to find an admin account using credentials.
                 login(request, user)
+                if needPermission:
+                    content_type = ContentType.objects.get_for_model(Tournament)
+                    permission = Permission.objects.get(content_type=content_type, codename='modify_tournament')
+                    user.user_permissions.add(permission)
+
                 try:
                     results = Group.objects.get(name=form.cleaned_data['name'], aPassword=form.cleaned_data['password'])
                     # Group found, return a success message.
                     messages.add_message(request, messages.SUCCESS,
                                          'Vous êtes maintenant connecté en tant qu\'administrateur !')  # Redirect user to home page.
-                    request.session["isConnected"] = True
+
                     request.session["groupname"] = results.name
                     request.session["isAdmin"] = True
                     return redirect('home')
@@ -57,7 +66,6 @@ def logon(request):
                         messages.add_message(request, messages.SUCCESS,
                                              'Vous êtes maintenant connecté en tant que visiteur !')
 
-                        request.session["isConnected"] = True
                         request.session["groupname"] = results.name
                         # Redirect user to home page.
                         return redirect('home')

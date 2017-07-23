@@ -3,7 +3,7 @@
 {% block playersclass %} active {% endblock %}
 {% block section %}
 <h2>Joueurs</h2>
-	{% if request.session.isAdmin %}
+	{% if  isAdmin %}
 	<div>
 		<form action="{% url 'players' %}" method="post">
 			{% csrf_token %}
@@ -17,9 +17,10 @@
 	<div>Aucun joueur pour le moment.</div>
 	
 	{% else %}
-		<div class="row">
+		<div class="row editable_player">
 			{% for player in players %}
-				<div class="bg-primary col-lg-1 player">{{ player }}</div>
+				<div class="bg-primary col-lg-2 col-lg-offset-1 player">{{ player }}</div>
+				<!--<div class="bg-danger col-lg-1">X</div>-->
 			{% endfor %}
 		</div>
 	{% endif %} 
