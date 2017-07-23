@@ -33,7 +33,7 @@
 			  {% if request.session.isAdmin %}
 				<li role="presentation" class="{% block createtournamentsclass %}{% endblock %}"><a href="{% url 'create_tournament' %}">Creer un tournoi</a></li>
 			  {% endif %}
-			  
+
 			  <li role="presentation"><a href="{% url 'deconnect' %}">Deconnexion</a></li>
 			</ul>
         {% endblock %}

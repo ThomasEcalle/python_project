@@ -5,10 +5,10 @@
 <h2>Joueurs</h2>
 	{% if  isAdmin %}
 	<div>
-		<form action="{% url 'players' %}" method="post">
+		<form action="{% url 'players' %}" method="post" style="display:flex">
 			{% csrf_token %}
 			{{ form.as_p }}
-			<button type="submit">Créer</button>
+			<button style="height: 27px" class="btn btn-primary" type="submit">Créer</button>
 		</form>
 	</div>
 	{% endif %} 
@@ -17,9 +17,31 @@
 	<div>Aucun joueur pour le moment.</div>
 	
 	{% else %}
-		<div class="row editable_player">
+		<script>
+				function filterName(e)
+				{
+				    if (e==undefined){return;}
+				    var filter = $("#filterByName").val();
+				    var usr_filter = "";
+				    // ascii
+					if ((e.keyCode > 93 && e.keyCode < 106)||(e.keyCode > 95 && e.keyCode < 108)) {usr_filter = filter+String(e.keyCode-96)}
+					else if (e.keyCode > 46 && e.keyCode < 91) {usr_filter = filter+ String.fromCharCode(e.keyCode);}
+					// backspace
+					else if (e.keyCode == 8) {usr_filter = filter.substring(0,filter.length -1);}
+					var playerList = $("#PlayerList").children()
+					for (var i = 0; i<playerList.length; ++i) {
+					    if ( playerList[i].id.toLowerCase().indexOf(usr_filter.toLowerCase())===-1) {$(playerList[i]).hide()}
+						else {$(playerList[i]).show()}
+					}
+				}
+			</script>
+		<div class="form-group" style="display:flex">
+			  <input type="text" onkeydown="filterName(event);" class="form-control" id="filterByName" style="width: 250px;">
+			  <button type="button" onclick="filterName()" class="btn btn-primary">Rechercher</button>
+		</div>
+		<div class="row editable_player" id="PlayerList">
 			{% for player in players %}
-				<div class="bg-primary col-lg-2 col-lg-offset-1 player">{{ player }}</div>
+				<div id={{ player }} class="bg-primary col-lg-2 col-lg-offset-1 player">{{ player }}</div>
 				<!--<div class="bg-danger col-lg-1">X</div>-->
 			{% endfor %}
 		</div>

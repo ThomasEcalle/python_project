@@ -9,7 +9,7 @@ def all(request):
     """ this page will be needed to crete a tournament."""
 
     groups = Group.objects.filter(name=request.session['groupname'])
-    tournaments = Tournament.objects.filter(group=groups[0])
+    tournaments = Tournament.objects.filter(group=groups[0]).order_by('name')
 
     return render(request, 'all.html', locals())  # Show the subscription page.
 

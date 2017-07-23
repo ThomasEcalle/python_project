@@ -9,9 +9,31 @@
 		<div>Aucun tournoi pour le moment.</div>
 		
 		{% else %}
-			<div class="row">
+			<script>
+				function filterName(e)
+				{
+				    if (e==undefined){return;}
+				    var filter = $("#filterByName").val();
+				    var usr_filter = "";
+				    // ascii
+					if ((e.keyCode > 93 && e.keyCode < 106)||(e.keyCode > 95 && e.keyCode < 108)) {usr_filter = filter+String(e.keyCode-96)}
+					else if (e.keyCode > 46 && e.keyCode < 91) {usr_filter = filter+ String.fromCharCode(e.keyCode);}
+					// backspace
+					else if (e.keyCode == 8) {usr_filter = filter.substring(0,filter.length -1);}
+					var tounamentList = $("#TournamentList").children()
+					for (var i = 0; i<tounamentList.length; ++i) {
+					    if ( tounamentList[i].id.toLowerCase().indexOf(usr_filter.toLowerCase())===-1) {$(tounamentList[i]).hide()}
+						else {$(tounamentList[i]).show()}
+					}
+				}
+			</script>
+			<div class="form-group" style="display:flex">
+			  <input type="text" onkeydown="filterName(event);" class="form-control" id="filterByName" style="width: 250px;">
+			  <button type="button" onclick="filterName()" class="btn btn-info">Rechercher</button>
+			</div>
+			<div class="row" id="TournamentList" style="display:grid">
 				{% for tournament in tournaments %}
-					<div class="bg-info col-lg-4 tournament"><a href="{% url 'infos' slug=tournament.name  %}">{{ tournament }}</a></div>
+					<div id={{ tournament }} class="bg-info col-lg-4 tournament"><a href="{% url 'infos' slug=tournament.name  %}">{{ tournament }}</a></div>
 				{% endfor %}
 			</div>
 		{% endif %} 
