@@ -9,54 +9,76 @@ from ..models import Group
 # This file contains the logon page render.
 def logon(request):
 
-    # Check if the server is in production or not.
-    if settings.ENVIRONMENT != 'PROD':
+    # Check if user is already logged.
+    if request.session.has_key('name'):
 
-        # Print an information message saying in wich environment the server is for now.
-        messages.add_message(request, messages.INFO, 'Environnement is ' + settings.ENVIRONMENT + ' !')
+        # User is already logged, redirect him to the home page.
+        messages.add_message(request, messages.INFO, 'Vous êtes déjà connecté !')
+        return redirect('/tournament/home')
 
-    # Check if debug mode is on.
-    if settings.DEBUG == True:
+    # User is not logged, redirect to the logon page.
+    else:
 
-        # Print a warning message to inform that the debug mode is on.
-        messages.add_message(request, messages.WARNING, 'Debug mode is ON !')
+        # Check if the server is in production or not.
+        if settings.ENVIRONMENT != 'PROD':
 
-        # Put the logon form on the view.
-    form = LogonForm(request.POST or None)
+            # Print an information message saying in wich environment the server is for now.
+            messages.add_message(request, messages.INFO, 'Environnement is ' + settings.ENVIRONMENT + ' !')
 
-    # Check if form has been posted.
-    if request.method == 'POST':
+        # Check if debug mode is on.
+        if settings.DEBUG == True:
 
-        # Check if form submitted by user is valid.
-        if form.is_valid():
+            # Print a warning message to inform that the debug mode is on.
+            messages.add_message(request, messages.WARNING, 'Debug mode is ON !')
 
-            # Try to find an admin account using credentials.
-            try:
-                results = Group.objects.get(name=form.cleaned_data['name'], aPassword=form.cleaned_data['password'])
+            # Put the logon form on the view.
+        form = LogonForm(request.POST or None)
 
-                # Group found, return a success message.
-                messages.add_message(request, messages.SUCCESS, 'Vous êtes maintenant connecté en tant qu\'administrateur !')
+        # Check if form has been posted.
+        if request.method == 'POST':
 
-                # Redirect user to home page.
-                return redirect('home', permanent=True)
+            # Check if form submitted by user is valid.
+            if form.is_valid():
 
-            # No group found using these credentials.
-            except Group.DoesNotExist:
-
-                # Try to find a visitor group using these credentials.
+                # Try to find an admin account using credentials.
                 try:
-                    results = Group.objects.get(name=form.cleaned_data['name'], vPassword=form.cleaned_data['password'])
+                    results = Group.objects.get(name=form.cleaned_data['name'], aPassword=form.cleaned_data['password'])
+
+                    # Store group name in session, by this way we can check is user is logged by checking if there is a name in session.
+                    request.session['name'] = form.cleaned_data['name']
+
+                    # Precise that logged user is an administrator.
+                    request.session['admin'] = True
 
                     # Group found, return a success message.
-                    messages.add_message(request, messages.SUCCESS, 'Vous êtes maintenant connecté en tant que visiteur !')
+                    messages.add_message(request, messages.SUCCESS, 'Vous êtes maintenant connecté en tant qu\'administrateur !')
 
                     # Redirect user to home page.
-                    return redirect('home')
+                    return redirect('home', permanent=True)
 
-                # No group found using the visitor password.
+                # No group found using these credentials.
                 except Group.DoesNotExist:
 
-                    # Return an error message.
-                    messages.add_message(request, messages.ERROR, 'Identifiant ou mot de passe incorrect !')
+                    # Try to find a visitor group using these credentials.
+                    try:
+                        results = Group.objects.get(name=form.cleaned_data['name'], vPassword=form.cleaned_data['password'])
 
-    return render(request, 'logon.html', locals())
+                        # Store group name in session, by this way we can check is user is logged by checking if there is a name in session.
+                        request.session['name'] = form.cleaned_data['name']
+
+                        # Precise that logged user is not an administrator.
+                        request.session['admin'] = False
+
+                        # Group found, return a success message.
+                        messages.add_message(request, messages.SUCCESS, 'Vous êtes maintenant connecté en tant que visiteur !')
+
+                        # Redirect user to home page.
+                        return redirect('home')
+
+                    # No group found using the visitor password.
+                    except Group.DoesNotExist:
+
+                        # Return an error message.
+                        messages.add_message(request, messages.ERROR, 'Identifiant ou mot de passe incorrect !')
+
+        return render(request, 'logon.html', locals())

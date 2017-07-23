@@ -4,4 +4,6 @@
 
 from .home import *
 from .logon import *
+from .logout import *
+from .account import *
 from .subscription import *

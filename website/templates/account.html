@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Tournament - Accueil{% endblock %}
 {% block section %}
-  <p>Bienvenue {{ name }}</p>
+  <p>Nom du groupe : {{ name }}</p>
+  <button>Modifier</button>
+  <p>Adresse email du groupe : {{ email }}</p>
+  <button>Modifier</button>
   <p><a href="../logout">Déconnexion</a></p>
 {% endblock %}
