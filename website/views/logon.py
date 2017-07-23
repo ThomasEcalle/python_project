@@ -14,14 +14,14 @@ from ..models import Group, Tournament
 def logon(request):
     """ Login work """
     # Check if the server is in production or not.
-    if settings.ENVIRONMENT != 'PROD':
+    # if settings.ENVIRONMENT != 'PROD':
         # Print an information message saying in wich environment the server is for now.
-        messages.add_message(request, messages.INFO, 'Environnement is ' + settings.ENVIRONMENT + ' !')
+        #messages.add_message(request, messages.INFO, 'Environnement is ' + settings.ENVIRONMENT + ' !')
 
     # Check if debug mode is on.
-    if settings.DEBUG == True:
-        # Print a warning message to inform that the debug mode is on.
-        messages.add_message(request, messages.WARNING, 'Debug mode is ON !')
+	# if settings.DEBUG == True:
+		# Print a warning message to inform that the debug mode is on.
+		# messages.add_message(request, messages.WARNING, 'Debug mode is ON !')
 
     # Put the logon form on the view.
     form = LogonForm(request.POST or None)

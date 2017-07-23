@@ -6,5 +6,5 @@ from django.shortcuts import render
 @login_required
 def home(request):
     """ show a basic home page"""
-    messages.add_message(request, messages.DEBUG, 'Test message !')
+    # messages.add_message(request, messages.DEBUG, 'Test message !')
     return render(request, 'home.html', {})
