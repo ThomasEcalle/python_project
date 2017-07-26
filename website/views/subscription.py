@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from ..forms import SubscriptionForm
 
 
@@ -29,6 +29,8 @@ def subscription(request):
             userVisitor.save()
             # If the form is valid and can be submitted, return an information message to user.
             form.save()
-            return render(request, 'logon.html', locals())  # Form is submitted, send a view with an empty form.
+            messages.add_message(request, messages.SUCCESS,
+                                 'Compte correctement cree!')
+            return redirect('logon', permanent=True)
 
     return render(request, 'subscription.html', locals())  # Show the subscription page.
